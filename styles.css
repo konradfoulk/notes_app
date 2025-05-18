@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+    color: hsl(0, 0%, 90%);
+    font-family: arial;
+}
+
+:not(ul, ol) {
+    margin: 0;
+    padding: 0;
+}
+
+[contenteditable] {
+    outline: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: hsl(0, 0%, 20%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar:hover {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border: 1px solid;
+    text-align: left;
+    padding: 7px;
+}
+
+body {
+    height: 100vh;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#home-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: hsl(0, 0%, 20%);
+}
+
+#title {
+    margin: 10px;
+    cursor: default;
+}
+
+#user {
+    margin: 3px;
+    margin-right: 30px;
+    padding: 7px;
+    border-radius: .2rem;
+}
+
+#user:hover {
+    background-color: hsl(0, 0%, 15%);
+    cursor: pointer;
+}
+
+#content {
+    overflow: auto;
+    flex: 1;
+    display: flex;
+}
+
+#file-bar {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    align-items: end;
+    background-color: hsl(0, 0%, 10%);
+}
+
+#file-list {
+    flex: 1;
+    overflow: auto;
+}
+
+#new-file {
+    margin-right: 30px;
+    margin-left: 30px;
+    margin: 10px;
+    padding: 7px;
+    padding-left: 11px;
+    padding-right: 10px;
+    width: fit-content;
+    border-radius: 1rem;
+    color: goldenrod;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#new-file:hover {
+    background-color: hsl(0, 0%, 15%);
+}
+
+#notepad {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(0, 0%, 15%);
+}
+
+#toolbar {
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+}
+
+.icon-btn {
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 7px;
+}
+
+.icon-btn:hover {
+    background-color: hsl(0, 0%, 20%);
+    cursor: pointer;
+    border-radius: .2rem;
+}
+
+#spacer {
+    margin-right: auto;
+    visibility: hidden;
+}
+
+#delete {
+    margin-left: auto;
+}
+
+.left-end {
+    margin-right: 1px;
+}
+
+.right-end {
+    margin-left: 1px;
+}
+
+.between {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.icon {
+
+    color: goldenrod;
+}
+
+#note {
+    padding: 3em;
+    flex: 1;
+    overflow: auto;
+}

@@ -1,12 +1,26 @@
 * {
     box-sizing: border-box;
-    color: hsl(0, 0%, 90%);
     font-family: arial;
+    color: hsl(0, 0%, 90%);
 }
 
 :not(ul, ol) {
     margin: 0;
     padding: 0;
+}
+
+.colored {
+    color: goldenrod;
+}
+
+button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: medium;
+    padding: 7px;
+    border-radius: 3px;
 }
 
 [contenteditable] {
@@ -18,7 +32,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 15%);
     border-radius: 5px;
 }
 
@@ -43,50 +57,49 @@ th {
 
 body {
     height: 100vh;
+    width: 100vw;
 }
 
 main {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-#home-bar {
+#homebar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     background-color: hsl(0, 0%, 20%);
 }
 
-#title {
+#app-name {
     margin: 10px;
     cursor: default;
 }
 
-#user {
-    margin: 3px;
+#user-btn {
     margin-right: 30px;
-    padding: 7px;
-    border-radius: .2rem;
 }
 
-#user:hover {
+#user-btn:hover {
     background-color: hsl(0, 0%, 15%);
-    cursor: pointer;
 }
 
 #content {
-    overflow: auto;
     flex: 1;
+    overflow: auto;
     display: flex;
 }
 
-#file-bar {
+#filebar {
+    width: 225px;
+    overflow: auto;
     display: flex;
     flex-direction: column;
-    overflow: auto;
     align-items: end;
-    background-color: hsl(0, 0%, 10%);
+    background-color: hsl(0, 0%, 15%);
 }
 
 #file-list {
@@ -94,49 +107,45 @@ main {
     overflow: auto;
 }
 
-#new-file {
-    margin-right: 30px;
-    margin-left: 30px;
-    margin: 10px;
-    padding: 7px;
-    padding-left: 11px;
-    padding-right: 10px;
-    width: fit-content;
-    border-radius: 1rem;
-    color: goldenrod;
+#new-file-btn {
+    margin: 10px 30px;
+    padding: 7px 10px;
     font-weight: bold;
-    cursor: pointer;
+    border-radius: 1000px;
 }
 
-#new-file:hover {
-    background-color: hsl(0, 0%, 15%);
+#new-file-btn:hover {
+    background-color: hsl(0, 0%, 20%);
 }
 
-#notepad {
+#text-editor {
     flex: 1;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    background-color: hsl(0, 0%, 15%);
+    background-color: hsl(0, 0%, 10%);
 }
 
 #toolbar {
-    padding-left: 30px;
-    padding-right: 30px;
     display: flex;
+    align-items: center;
+    padding: 10px 30px;
 }
 
-.icon-btn {
-    margin: 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 7px;
+.tool-btn {
+    margin: 1px;
 }
 
-.icon-btn:hover {
-    background-color: hsl(0, 0%, 20%);
-    cursor: pointer;
-    border-radius: .2rem;
+.tool-btn:hover {
+    background-color: hsl(0, 0%, 15%);
+}
+
+.left-end {
+    margin-left: 15px;
+}
+
+.right-end {
+    margin-right: 15px;
 }
 
 #spacer {
@@ -144,30 +153,12 @@ main {
     visibility: hidden;
 }
 
-#delete {
+#delete-note {
     margin-left: auto;
 }
 
-.left-end {
-    margin-right: 1px;
-}
-
-.right-end {
-    margin-left: 1px;
-}
-
-.between {
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-.icon {
-
-    color: goldenrod;
-}
-
-#note {
-    padding: 3em;
+#text-content {
     flex: 1;
     overflow: auto;
+    padding: 75px;
 }

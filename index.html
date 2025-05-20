@@ -14,102 +14,57 @@
 
 <body>
     <main>
-        <div id="home-bar">
-            <h3 id="title">Notes App</h3>
-            <div id="user">Konrad Foulk</div>
+        <div id="homebar">
+            <h3 id="app-name" class="text">Notes App</h3>
+            <button id="user-btn">Konrad Foulk</button>
         </div>
 
         <div id="content">
-            <div id="file-bar">
+            <div id="filebar">
                 <div id="file-list"></div>
-                <div id="new-file">New File</div>
+                <button id="new-file-btn" class="colored">New File</button>
             </div>
 
-            <div id="notepad">
+            <div id="text-editor">
                 <div id="toolbar">
-                    <div id="spacer" class="icon-btn">
-                        <i class="fa-regular fa-trash-can fa-fw icon"></i>
-                    </div>
-                    <div id="heading" class="icon-btn left-end">
-                        <i class="fa-solid fa-heading fa-fw icon"></i>
-                    </div>
-                    <div id="subheading" class="icon-btn right-end">
-                        <i class="fa-solid fa-s fa-fw icon"></i>
-                    </div>
-                    <div id="bold" class="icon-btn left-end">
-                        <i class="fa-solid fa-bold fa-fw icon"></i>
-                    </div>
-                    <div id="italic" class="icon-btn between">
-                        <i class="fa-solid fa-italic fa-fw icon"></i>
-                    </div>
-                    <div id="underline" class="icon-btn between">
-                        <i class="fa-solid fa-underline fa-fw icon"></i>
-                    </div>
-                    <div id="strikethrough" class="icon-btn right-end">
-                        <i class="fa-solid fa-strikethrough fa-fw icon"></i>
-                    </div>
-                    <div id="table" class="icon-btn left-end">
-                        <i class="fa-solid fa-table-cells-large fa-fw icon"></i>
-                    </div>
-                    <div id="list" class="icon-btn between">
-                        <i class="fa-solid fa-list-ul fa-fw icon"></i>
-                    </div>
-                    <div id="numbered-list" class="icon-btn between">
-                        <i class="fa-solid fa-list-ol fa-fw icon"></i>
-                    </div>
-                    <div id="checklist" class="icon-btn right-end">
-                        <i class="fa-solid fa-list-check fa-fw icon"></i>
-                    </div>
-                    <div id="delete" class="icon-btn">
-                        <i class="fa-regular fa-trash-can fa-fw icon"></i>
-                    </div>
+                    <button id="spacer" class="tool-btn">
+                        <i class="fa-regular fa-trash-can fa-fw colored"></i>
+                    </button>
+                    <button id="heading" class="tool-btn left-end">
+                        <i class="fa-solid fa-heading fa-fw colored"></i>
+                    </button>
+                    <button id="subheading" class="tool-btn right-end">
+                        <i class="fa-solid fa-s fa-fw colored"></i>
+                    </button>
+                    <button id="bold" class="tool-btn left-end">
+                        <i class="fa-solid fa-bold fa-fw colored"></i>
+                    </button>
+                    <button id="italic" class="tool-btn">
+                        <i class="fa-solid fa-italic fa-fw colored"></i>
+                    </button>
+                    <button id="underline" class="tool-btn">
+                        <i class="fa-solid fa-underline fa-fw colored"></i>
+                    </button>
+                    <button id="strikethrough" class="tool-btn right-end">
+                        <i class="fa-solid fa-strikethrough fa-fw colored"></i>
+                    </button>
+                    <button id="table" class="tool-btn left-end">
+                        <i class="fa-solid fa-table-cells-large fa-fw colored"></i>
+                    </button>
+                    <button id="list" class="tool-btn">
+                        <i class="fa-solid fa-list-ul fa-fw colored"></i>
+                    </button>
+                    <button id="numbered-list" class="tool-btn">
+                        <i class="fa-solid fa-list-ol fa-fw colored"></i>
+                    </button>
+                    <button id="checklist" class="tool-btn right-end">
+                        <i class="fa-solid fa-list-check fa-fw colored"></i>
+                    </button>
+                    <button id="delete-note" class="tool-btn">
+                        <i class="fa-regular fa-trash-can fa-fw colored"></i>
+                    </button>
                 </div>
-                <div id="note" contenteditable="true">
-                    <h1>Notes</h1>
-                    <br>
-                    <h3>I've done everything I need to do, now to make it functional.</h3>
-                    <br><br>
-                    <p>Some content.</p>
-                    <br>
-                    <b>Important content</b>
-                    <br>
-                    <i>Claryifing content</i>
-                    <br>
-                    <u>Kind-of important content</u>
-                    <br>
-                    <s>nevermind this</s>
-                    <br><br>
-                    <table>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>content</td>
-                            <td>test</td>
-                            <td>women's studies</td>
-                        </tr>
-                    </table>
-                    <br>
-                    <ul>
-                        <li>item 1</li>
-                        <li>second item</li>
-                        <li>this is the third item</li>
-                    </ul>
-                    <br>
-                    <ol>
-                        <li>uno</li>
-                        <li>dos</li>
-                        <li>tres</li>
-                    </ol>
-                    <br>
-                    <input type="checkbox" id="1">
-                    <label for="1">do this</label>
-                    <br>
-                    <input type="checkbox" checked="checked" id="2">
-                    <label for="2"><s>done</s></label>
-                </div>
+                <div id="text-content" contenteditable="true"></div>
             </div>
         </div>
     </main>

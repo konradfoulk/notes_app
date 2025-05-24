@@ -19,12 +19,21 @@ button {
     outline: none;
     cursor: pointer;
     font-size: medium;
+    margin: 1px;
     padding: 7px;
     border-radius: 3px;
 }
 
+button:hover {
+    background-color: hsl(0, 0%, 15%);
+}
+
 [contenteditable] {
     outline: none;
+}
+
+.active {
+    background-color: hsl(0, 0%, 15%);
 }
 
 ::-webkit-scrollbar {
@@ -130,14 +139,6 @@ main {
     display: flex;
     align-items: center;
     padding: 10px 30px;
-}
-
-.tool-btn {
-    margin: 1px;
-}
-
-.tool-btn:hover {
-    background-color: hsl(0, 0%, 15%);
 }
 
 .left-end {

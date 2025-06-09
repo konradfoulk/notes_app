@@ -80,7 +80,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 15%);
 }
 
 #app-name {
@@ -93,7 +93,7 @@ main {
 }
 
 #user-btn:hover {
-    background-color: hsl(0, 0%, 15%);
+    background-color: hsl(0, 0%, 20%);
 }
 
 #content {

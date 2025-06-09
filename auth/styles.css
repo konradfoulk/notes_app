@@ -12,11 +12,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: hsl(0, 0%, 10%);
+    background-color: hsl(0, 0%, 15%);
 }
 
 #container {
-    background-color: hsl(0, 0%, 15%);
+    background-color: hsl(0, 0%, 10%);
     width: fit-content;
     border-radius: 10px;
     padding: 30px 40px;
@@ -36,7 +36,7 @@ body {
     display: block;
     width: 420px;
     outline: none;
-    border: 2px solid hsl(0, 0%, 20%);
+    border: 2px solid hsl(0, 0%, 15%);
     border-radius: 25px;
     font-size: 16px;
 }
@@ -49,11 +49,16 @@ body {
 }
 
 #container .btn {
-    background-color: hsl(0, 0%, 20%);
+    background-color: hsl(0, 0%, 15%);
     height: 45px;
     cursor: pointer;
     font-weight: 600;
     margin: 20px 0;
+}
+
+#submit-btn:hover {
+    background-color: hsl(0, 0%, 20%);
+    border-color: hsl(0, 0%, 20%);
 }
 
 #alt-link {

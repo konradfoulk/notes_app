@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
 </head>
 
 <body>
-    <div id="nav-container">
-        <span id="username">{{content}}</span>
-        <button id="logout">Log Out</button>
-    </div>
+    <span id="username">{{content}}</span>
+    <button id="logout">Log Out</button>
 </body>
 
 </html>

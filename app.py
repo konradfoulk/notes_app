@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # initialize Flask app and database
 app = Flask(__name__)
@@ -41,8 +42,19 @@ def login():
         return render_template('login.html')
 
 
-@app.route('/signup')
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
+    if request.method == 'POST':
+        user = request.form['username']
+        password = request.form['password']
+
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=user, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        # session['user'] = user
+        return redirect(url_for('index'))
+
     return render_template('signup.html')
 
 
@@ -53,4 +65,6 @@ def logout():
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

@@ -1,10 +1,8 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length
+from forms import LoginForm, SignupForm, LogoutForm
 
 
 # initialize Flask app, database, and flask_login
@@ -31,27 +29,6 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(150), nullable=False)
-
-
-# define flask forms for CSRF protection
-class LoginForm(FlaskForm):
-    username = StringField(validators=[
-                           DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'username'})
-    password = PasswordField(validators=[
-                             DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'password'})
-    submit = SubmitField('Log In')
-
-
-class SignupForm(FlaskForm):
-    username = StringField(validators=[
-                           DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'username'})
-    password = PasswordField(validators=[
-                             DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'password'})
-    submit = SubmitField('Sign Up')
-
-
-class LogoutForm(FlaskForm):
-    submit = SubmitField('Log Out')
 
 
 # define routes and functions for webpage

@@ -78,9 +78,10 @@ def login():
             # remember=True?
             # current_user.is_authenticated = True?
             return redirect(url_for('index'))
-
-        # WHAT IF PASSWORD IS INCORRECT?
-    return render_template('login.html', form=form)
+        else:
+            # handle failed login
+            return render_template('login.html', form=form, error=True)
+    return render_template('login.html', form=form, error=False)
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -91,7 +92,9 @@ def signup():
         username = form.username.data
         password = form.password.data
 
-        # WHAT IF USERNAME ALREADY EXISTS?
+        # handle duplicate usernames
+        if User.query.filter_by(username=username).first():
+            return render_template('signup.html', form=form, error=True)
 
         # create new user in database using hashed password
         hashed_password = generate_password_hash(password)
@@ -101,7 +104,7 @@ def signup():
 
         login_user(new_user)
         return redirect(url_for('index'))
-    return render_template('signup.html', form=form)
+    return render_template('signup.html', form=form, error=False)
 
 
 @app.route('/logout', methods=['POST'])

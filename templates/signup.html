@@ -9,10 +9,11 @@
 
 <body>
     <h1>Sign Up</h1>
-    <form action="{{url_for('signup')}}" method="post">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" value="Sign Up">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username }}
+        {{ form.password }}
+        {{ form.submit }}
     </form>
     <span>Already have an account? <a href="{{url_for('login')}}">Log In</a></span>
 </body>

@@ -1,7 +1,11 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length
+
 
 # initialize Flask app, database, and flask_login
 app = Flask(__name__)
@@ -29,37 +33,63 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
 
 
+# define flask forms for CSRF protection
+class LoginForm(FlaskForm):
+    username = StringField(validators=[
+                           DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'username'})
+    password = PasswordField(validators=[
+                             DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'password'})
+    submit = SubmitField('Log In')
+
+
+class SignupForm(FlaskForm):
+    username = StringField(validators=[
+                           DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'username'})
+    password = PasswordField(validators=[
+                             DataRequired(), Length(min=3, max=30)], render_kw={'placeholder': 'password'})
+    submit = SubmitField('Sign Up')
+
+
+class LogoutForm(FlaskForm):
+    submit = SubmitField('Log Out')
+
+
 # define routes and functions for webpage
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html', content=current_user.username)
+    form = LogoutForm()
+    return render_template('index.html', content=current_user.username, form=form)
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == 'POST':
+    form = LoginForm()
+    if form.validate_on_submit():
         # get username and password from form on webpage
-        username = request.form['username']
-        password = request.form['password']
+        username = form.username.data
+        password = form.password.data
 
         # query the database for the user under that username
         # if the hashed passwords match, login the user and return the home page
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
+            # remember=True?
+            # current_user.is_authenticated = True?
             return redirect(url_for('index'))
 
         # WHAT IF PASSWORD IS INCORRECT?
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    if request.method == 'POST':
+    form = SignupForm()
+    if form.validate_on_submit():
         # get username and password from form on webpage
-        username = request.form['username']
-        password = request.form['password']
+        username = form.username.data
+        password = form.password.data
 
         # WHAT IF USERNAME ALREADY EXISTS?
 
@@ -71,10 +101,10 @@ def signup():
 
         login_user(new_user)
         return redirect(url_for('index'))
-    return render_template('signup.html')
+    return render_template('signup.html', form=form)
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 @login_required
 def logout():
     logout_user()

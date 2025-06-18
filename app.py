@@ -59,7 +59,7 @@ class LogoutForm(FlaskForm):
 @login_required
 def index():
     form = LogoutForm()
-    return render_template('index.html', content=current_user.username, form=form)
+    return render_template('index.html', username=current_user.username, form=form)
 
 
 @app.route('/login', methods=['POST', 'GET'])

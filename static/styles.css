@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#content-container {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+}
+
+#file-nav-container {
+    width: 225px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+#file-list {
+    flex: 1;
+    overflow: auto;
+}
+
+#note-editor {
+    flex: 1;
+    overflow: auto;
+}

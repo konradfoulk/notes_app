@@ -5,14 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-    <span>{{ username }}</span>
-    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
-        {{ form.hidden_tag() }}
-        {{ form.submit }}
-    </form>
+    <main>
+        <div id="nav-container">
+            <span>{{ username }}</span>
+            <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+                {{ form.hidden_tag() }}
+                {{ form.submit }}
+            </form>
+        </div>
+        <div id="content-container">
+            <div id="file-nav-container">
+                <div id="file-list">
+                    <button id="example-file">Note Title</button>
+                </div>
+                <button id="new-file-btn">New File</button>
+            </div>
+            <div id="note-editor" contenteditable="true" style="border: 1px solid; visibility: hidden;"></div>
+        </div>
+    </main>
 </body>
 
 </html>

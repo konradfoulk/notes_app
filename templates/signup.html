@@ -15,9 +15,9 @@
         {{ form.password }}
         {{ form.submit }}
     </form>
-    {% if error == True %}
-    <span style="color: red; display: block;">Username already exists.</span>
-    {% endif %}
+    {% for message in get_flashed_messages() %}
+    <span style="color: red; display: block;">{{message}}</span>
+    {% endfor %}
     <span>Already have an account? <a href="{{url_for('login')}}">Log In</a></span>
 </body>
 

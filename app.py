@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -57,8 +57,8 @@ def login():
             return redirect(url_for('index'))
         else:
             # handle failed login
-            return render_template('login.html', form=form, error=True)
-    return render_template('login.html', form=form, error=False)
+            flash('Username or password was incorrect.', 'error')
+    return render_template('login.html', form=form)
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -71,7 +71,8 @@ def signup():
 
         # handle duplicate usernames
         if User.query.filter_by(username=username).first():
-            return render_template('signup.html', form=form, error=True)
+            flash('Username already exists.', 'error')
+            return render_template('signup.html', form=form)
 
         # create new user in database using hashed password
         hashed_password = generate_password_hash(password)
@@ -81,7 +82,7 @@ def signup():
 
         login_user(new_user)
         return redirect(url_for('index'))
-    return render_template('signup.html', form=form, error=False)
+    return render_template('signup.html', form=form)
 
 
 @app.route('/logout', methods=['POST'])

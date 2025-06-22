@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, jsonify, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User
+from models import db, User, Note
 from forms import LoginForm, SignupForm, LogoutForm
 
 
@@ -82,6 +82,33 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+# define Notes API
+@app.route('/notes', methods=['GET'])
+def get_notes():
+    notes = Note.query.filter_by(user_id=current_user.id).order_by(
+        Note.last_save.desc()).all()
+    notes_list = [
+        {
+            'content': n.content,
+            'last_save': n.last_save.isoformat()
+        }
+        for n in notes]
+    return jsonify(notes_list)
+
+
+@app.route('/notes', methods=['POST'])
+def create_note():
+    note = Note(user_id=current_user.id)
+    db.session.add(note)
+    db.session.commit()
+    return jsonify(
+        {
+            'content': note.content,
+            'last_save': note.last_save.isoformat()
+        }
+    )
 
 
 if __name__ == '__main__':

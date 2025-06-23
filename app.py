@@ -91,10 +91,10 @@ def get_notes():
         Note.last_save.desc()).all()
     notes_list = [
         {
-            'content': n.content,
-            'last_save': n.last_save.isoformat()
+            'id': note.id,
+            'content': note.content
         }
-        for n in notes]
+        for note in notes]
     return jsonify(notes_list)
 
 
@@ -105,8 +105,8 @@ def create_note():
     db.session.commit()
     return jsonify(
         {
-            'content': note.content,
-            'last_save': note.last_save.isoformat()
+            'id': note.id,
+            'content': note.content
         }
     )
 

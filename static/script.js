@@ -1,30 +1,44 @@
 let notes = [];
+let fileList = document.querySelector('#file-list');
 
-function updateNotesList() {
-    let fileList = document.querySelector('#file-list');
-    fileList.innerHTML = '';
+function createBtn(noteId) {
+    let btn = document.createElement('button');
+    let editor = document.querySelector('#note-editor');
 
-    for (let note of notes) {
-        let btn = document.createElement('button');
+    //unnecessary
+    btn.textContent = noteId;
+    btn.id = noteId;
+    //unnecessary
 
-        btn.textContent = note.id;
-        btn.id = note.id;
-        fileList.appendChild(btn);
-    };
-}; // issue with this is it requires to loop through every note very frequently, bad for performance
+    btn.addEventListener('click', () => {
+        editor.style.visibility = 'visible';
+        editor.innerHTML = notes.find(note => note.id == noteId).content;
+    });
+    return (btn);
+}
 
 async function createNote() {
     const response = await fetch('/notes', { method: 'POST' });
     const data = await response.json();
+
     notes.unshift(data);
-    updateNotesList()
+    btn = createBtn(data.id);
+    fileList.insertBefore(btn, fileList.firstChild);
 };
 
 async function loadNotes() {
     const response = await fetch('/notes');
     const data = await response.json();
     notes = data;
-    updateNotesList()
+
+    fileList.innerHTML = '';
+    for (let note of notes) {
+        note.content = "apple"
+
+        btn = createBtn(note.id)
+        fileList.appendChild(btn);
+    };
+    notes[0].content = 'banana';
 };
 
 const newFileBtn = document.querySelector('#new-file-btn');

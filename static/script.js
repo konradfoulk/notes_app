@@ -1,51 +1,33 @@
-let notes = []; // this will be our "local storage" for all of our notes objects (content and timestamps)
-
+let notes = [];
 
 function updateNotesList() {
-    const fileList = document.querySelector('#file-list');
-    re = /^[^>]*>([^<]{1,20})(?:[^<]*)</;
-
+    let fileList = document.querySelector('#file-list');
     fileList.innerHTML = '';
-    for (let note in notes) {
-        const fileBtn = document.createElement('button');
 
-        title = re.match(note.content);
-        if (title) {
-            if (title.length == 20) {
-                fileBtn.textContent = title.slice(0, 16) + '...';
-            } else {
-                fileBtn.textContent = title;
-            };
-        } else {
-            fileBtn.textContent = 'New Note';
-        };
-        fileList.appendChild(fileBtn);
-        fileBtn.addEventListener('click', openNote(note.id));
+    for (let note of notes) {
+        let btn = document.createElement('button');
+
+        btn.textContent = note.id;
+        btn.id = note.id;
+        fileList.appendChild(btn);
     };
-};
-
-function openNote(id) {
-    let note = notes.find(n => n.id === id);
-};
+}; // issue with this is it requires to loop through every note very frequently, bad for performance
 
 async function createNote() {
-    let response = await fetch('/notes', { method: 'POST' });
-    let data = await response.json();
+    const response = await fetch('/notes', { method: 'POST' });
+    const data = await response.json();
     notes.unshift(data);
-    updateNotesList();
-    openNote(data.id);
+    updateNotesList()
 };
 
 async function loadNotes() {
-    let response = await fetch('/notes');
-    let data = await response.json();
+    const response = await fetch('/notes');
+    const data = await response.json();
     notes = data;
-
-    updateNoteList();
-
-    if (notes.length > 0) {
-        opennote;
-    } else {
-        createNote()
-    };
+    updateNotesList()
 };
+
+const newFileBtn = document.querySelector('#new-file-btn');
+newFileBtn.addEventListener('click', createNote);
+
+loadNotes();

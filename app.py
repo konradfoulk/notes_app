@@ -111,6 +111,19 @@ def create_note():
     )
 
 
+@app.route('/notes/<note_id>', methods=['PUT'])
+def save_note(note_id):
+    note = Note.query.filter_by(id=note_id).first()
+    data = request.get_json()
+    note.content = data.get('content', note.content)
+    note.last_save = db.func.now()
+    db.session.commit()
+    return jsonify({
+        'id': note.id,
+        'content': note.content
+    })
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

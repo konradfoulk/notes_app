@@ -9,7 +9,7 @@ function createBtn(noteId) {
 
     btn.textContent = noteId; //need to fix this next
     btn.id = 'note-' + noteId;
-    btn.classList.add('note-btn')
+    btn.classList.add('note-btn');
 
     btn.addEventListener('click', () => {
         editor.style.visibility = 'visible';
@@ -17,7 +17,7 @@ function createBtn(noteId) {
         currentNoteId = noteId;
     });
     return (btn);
-}
+};
 
 async function createNote() {
     const response = await fetch('/notes', { method: 'POST' });
@@ -26,6 +26,8 @@ async function createNote() {
     notes.unshift(data);
     btn = createBtn(data.id);
     fileList.insertBefore(btn, fileList.firstChild);
+
+    //need to open note automatically
 };
 
 async function loadNotes() {
@@ -34,7 +36,7 @@ async function loadNotes() {
     notes = data;
 
     for (let note of notes) {
-        btn = createBtn(note.id)
+        btn = createBtn(note.id);
         fileList.appendChild(btn);
     };
 };
@@ -46,17 +48,17 @@ async function saveNote() {
         body: JSON.stringify({ content: content }),
         headers: { 'Content-Type': 'application/json' }
     });
-    const data = await response.json()
+    const data = await response.json();
 
-    let index = notes.findIndex(n => n.id == currentNoteId)
+    let index = notes.findIndex(n => n.id == currentNoteId);
 
-    notes.splice(index, 1)
-    notes.unshift(data)
-    console.log(notes)
+    notes.splice(index, 1);
+    notes.unshift(data);
+    console.log(notes); // this is unnecessary in production
 
-    document.querySelector(`#note-${currentNoteId}`).remove()
-    newbtn = createBtn(currentNoteId)
-    fileList.insertBefore(newbtn, fileList.firstChild)
+    document.querySelector(`#note-${currentNoteId}`).remove();
+    newbtn = createBtn(currentNoteId);
+    fileList.insertBefore(newbtn, fileList.firstChild);
 };
 
 newFileBtn.addEventListener('click', createNote);

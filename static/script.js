@@ -11,9 +11,15 @@ function createBtn(noteId) {
     btn.id = 'note-' + noteId;
     btn.classList.add('note-btn');
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', e => {
         editor.style.visibility = 'visible';
         editor.innerHTML = notes.find(note => note.id == noteId).content;
+
+        if (document.querySelector('.active')) {
+            document.querySelector('.active').classList.remove('active')
+        }
+        e.target.classList.add('active')
+
         currentNoteId = noteId;
     });
     return (btn);
@@ -27,7 +33,7 @@ async function createNote() {
     btn = createBtn(data.id);
     fileList.insertBefore(btn, fileList.firstChild);
 
-    //need to open note automatically
+    btn.click()
 };
 
 async function loadNotes() {
@@ -54,11 +60,16 @@ async function saveNote() {
 
     notes.splice(index, 1);
     notes.unshift(data);
-    console.log(notes); // this is unnecessary in production
 
-    document.querySelector(`#note-${currentNoteId}`).remove();
-    newbtn = createBtn(currentNoteId);
-    fileList.insertBefore(newbtn, fileList.firstChild);
+    console.log('note-' + currentNoteId); // this is unnecessary in production
+    console.log(document.querySelector('#file-list').firstChild.id)
+
+    if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
+        document.querySelector(`#note-${currentNoteId}`).remove();
+        newbtn = createBtn(currentNoteId);
+        newbtn.classList.add('active');
+        fileList.insertBefore(newbtn, fileList.firstChild);
+    }
 };
 
 newFileBtn.addEventListener('click', createNote);

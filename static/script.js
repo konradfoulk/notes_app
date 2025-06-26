@@ -49,6 +49,9 @@ function createBtn(noteId) {
 
     btn.addEventListener('click', e => {
         editor.innerHTML = notes.find(note => note.id == noteId).content;
+        if (editor.style.visibility == 'hidden') {
+            editor.style.visibility = 'visible'
+        }
 
         if (document.querySelector('.active')) {
             document.querySelector('.active').classList.remove('active')
@@ -81,7 +84,9 @@ async function loadNotes() {
         fileList.insertBefore(btn, fileList.firstChild);
     };
 
-    fileList.firstChild.click()
+    if (fileList.firstChild) {
+        fileList.firstChild.click()
+    }
 };
 
 async function saveNote() {
@@ -96,26 +101,30 @@ async function saveNote() {
     notes.splice(notes.findIndex(note => note.id == currentNoteId), 1);
     notes.unshift(data);
 
-    // this whole thing could be updateBtn()?
     if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
         document.querySelector(`#note-${currentNoteId}`).remove();
         btn = createBtn(currentNoteId);
         btn.classList.add('active');
         fileList.insertBefore(btn, fileList.firstChild);
     } else {
-        btn = document.querySelector(`#note-${currentNoteId}`)
-        btn.textContent = getTitle(data.content);
+        document.querySelector(`#note-${currentNoteId}`).textContent = getTitle(data.content);
     };
 };
 
 async function deleteNote() {
-    const response = await fetch(`/notes/${currentNoteId}`, { method: 'DELETE' })
-    const data = await response.json()
+    if (notes.find(note => note.id == currentNoteId)) {
+        const response = await fetch(`/notes/${currentNoteId}`, { method: 'DELETE' })
+        const data = await response.json()
 
-    notes.splice(notes.findIndex(note => note.id == data.id), 1);
-    document.querySelector(`#note-${data.id}`).remove()
+        notes.splice(notes.findIndex(note => note.id == data.id), 1);
+        document.querySelector(`#note-${data.id}`).remove()
 
-    fileList.firstChild.click()
+        if (fileList.firstChild) {
+            fileList.firstChild.click();
+        } else {
+            editor.style.visibility = 'hidden'
+        };
+    }
 };
 
 document.querySelector('#new-file-btn').addEventListener('click', createNote);

@@ -4,10 +4,48 @@ let fileList = document.querySelector('#file-list');
 const newFileBtn = document.querySelector('#new-file-btn');
 let editor = document.querySelector('#note-editor');
 
+function getTitle(content) {
+    if (!content) {
+        return 'New Note'
+    }
+
+    const contentContainer = document.createElement('div');
+    contentContainer.innerHTML = content
+
+    let title = ''
+    for (let node of contentContainer.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const t = node.textContent;
+            if (t) {
+                title = t;
+                break;
+            };
+        }
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const t = node.innerText;
+            if (t) {
+                title = t;
+                break;
+            }
+        }
+    };
+
+    if (!title) {
+        return 'New Note'
+    }
+
+    if (title.length >= 20) {
+        return title.slice(0, 17) + '...'
+    };
+
+    return title
+};
+
 function createBtn(noteId) {
     let btn = document.createElement('button');
 
-    btn.textContent = noteId; //need to fix this next
+    content = notes.find(note => note.id == noteId).content
+    btn.textContent = getTitle(content);
     btn.id = 'note-' + noteId;
     btn.classList.add('note-btn');
 
@@ -61,15 +99,18 @@ async function saveNote() {
     notes.splice(index, 1);
     notes.unshift(data);
 
-    console.log('note-' + currentNoteId); // this is unnecessary in production
     console.log(document.querySelector('#file-list').firstChild.id)
 
+    // this whole thing could be updateBtn()?
     if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
         document.querySelector(`#note-${currentNoteId}`).remove();
         newbtn = createBtn(currentNoteId);
         newbtn.classList.add('active');
         fileList.insertBefore(newbtn, fileList.firstChild);
-    }
+    } else {
+        btn = document.querySelector(`#note-${currentNoteId}`)
+        btn.textContent = getTitle(data.content);
+    };
 };
 
 newFileBtn.addEventListener('click', createNote);

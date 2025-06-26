@@ -39,6 +39,10 @@ main {
     overflow: auto;
 }
 
+.note-btn {
+    display: block;
+}
+
 .active {
     color: red;
 }

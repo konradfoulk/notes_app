@@ -48,7 +48,6 @@ function createBtn(noteId) {
     btn.classList.add('note-btn');
 
     btn.addEventListener('click', e => {
-        editor.style.visibility = 'visible';
         editor.innerHTML = notes.find(note => note.id == noteId).content;
 
         if (document.querySelector('.active')) {
@@ -81,6 +80,8 @@ async function loadNotes() {
         btn = createBtn(note.id);
         fileList.insertBefore(btn, fileList.firstChild);
     };
+
+    fileList.firstChild.click()
 };
 
 async function saveNote() {

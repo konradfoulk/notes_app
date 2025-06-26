@@ -108,12 +108,18 @@ async function saveNote() {
     };
 };
 
-//delete note
-// send request to api
-// delete note from local array
-// delete button
+async function deleteNote() {
+    const response = await fetch(`/notes/${currentNoteId}`, { method: 'DELETE' })
+    const data = await response.json()
+
+    notes.splice(notes.findIndex(note => note.id == data.id), 1);
+    document.querySelector(`#note-${data.id}`).remove()
+
+    fileList.firstChild.click()
+};
 
 document.querySelector('#new-file-btn').addEventListener('click', createNote);
+document.querySelector('#delete-btn').addEventListener('click', deleteNote)
 editor.addEventListener('input', saveNote);
 
 loadNotes();

@@ -113,7 +113,7 @@ def create_note():
 
 @app.route('/notes/<note_id>', methods=['PUT'])
 def save_note(note_id):
-    note = Note.query.filter_by(id=note_id).first()
+    note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
     data = request.get_json()
     note.content = data.get('content', note.content)
     note.last_save = db.func.now()
@@ -121,6 +121,17 @@ def save_note(note_id):
     return jsonify({
         'id': note.id,
         'content': note.content
+    })
+
+
+@app.route('/notes/<note_id>', methods=['DELETE'])
+def delete_note(note_id):
+    note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
+    db.session.delete(note)
+    db.session.commit()
+    return jsonify({
+        'status': 'success',
+        'id': note_id
     })
 
 

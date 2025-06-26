@@ -33,7 +33,7 @@ function getTitle(content) {
         return 'New Note'
     }
 
-    if (title.length >= 20) {
+    if (title.length > 20) {
         return title.slice(0, 17) + '...'
     };
 

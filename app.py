@@ -88,7 +88,7 @@ def logout():
 @app.route('/notes', methods=['GET'])
 def get_notes():
     notes = Note.query.filter_by(user_id=current_user.id).order_by(
-        Note.last_save.desc()).all()
+        Note.last_save).all()
     notes_list = [
         {
             'id': note.id,

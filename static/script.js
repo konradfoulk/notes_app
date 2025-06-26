@@ -1,7 +1,6 @@
 let notes = [];
 let currentNoteId;
 let fileList = document.querySelector('#file-list');
-const newFileBtn = document.querySelector('#new-file-btn');
 let editor = document.querySelector('#note-editor');
 
 function getTitle(content) {
@@ -44,8 +43,7 @@ function getTitle(content) {
 function createBtn(noteId) {
     let btn = document.createElement('button');
 
-    content = notes.find(note => note.id == noteId).content
-    btn.textContent = getTitle(content);
+    btn.textContent = getTitle(notes.find(note => note.id == noteId).content);
     btn.id = 'note-' + noteId;
     btn.classList.add('note-btn');
 
@@ -81,7 +79,7 @@ async function loadNotes() {
 
     for (let note of notes) {
         btn = createBtn(note.id);
-        fileList.appendChild(btn);
+        fileList.insertBefore(btn, fileList.firstChild);
     };
 };
 
@@ -94,27 +92,27 @@ async function saveNote() {
     });
     const data = await response.json();
 
-    let index = notes.findIndex(n => n.id == currentNoteId);
-
-    notes.splice(index, 1);
+    notes.splice(notes.findIndex(note => note.id == currentNoteId), 1);
     notes.unshift(data);
-
-    console.log(document.querySelector('#file-list').firstChild.id)
 
     // this whole thing could be updateBtn()?
     if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
         document.querySelector(`#note-${currentNoteId}`).remove();
-        newbtn = createBtn(currentNoteId);
-        newbtn.classList.add('active');
-        fileList.insertBefore(newbtn, fileList.firstChild);
+        btn = createBtn(currentNoteId);
+        btn.classList.add('active');
+        fileList.insertBefore(btn, fileList.firstChild);
     } else {
         btn = document.querySelector(`#note-${currentNoteId}`)
         btn.textContent = getTitle(data.content);
     };
 };
 
-newFileBtn.addEventListener('click', createNote);
+//delete note
+// send request to api
+// delete note from local array
+// delete button
 
+document.querySelector('#new-file-btn').addEventListener('click', createNote);
 editor.addEventListener('input', saveNote);
 
 loadNotes();

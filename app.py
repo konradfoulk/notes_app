@@ -9,7 +9,7 @@ from forms import LoginForm, SignupForm, LogoutForm
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '4'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 db.init_app(app)
 
@@ -86,6 +86,7 @@ def logout():
 
 # define Notes API
 @app.route('/notes', methods=['GET'])
+@login_required
 def get_notes():
     notes = Note.query.filter_by(user_id=current_user.id).order_by(
         Note.last_save).all()
@@ -99,6 +100,7 @@ def get_notes():
 
 
 @app.route('/notes', methods=['POST'])
+@login_required
 def create_note():
     note = Note(user_id=current_user.id)
     db.session.add(note)
@@ -112,6 +114,7 @@ def create_note():
 
 
 @app.route('/notes/<note_id>', methods=['PUT'])
+@login_required
 def save_note(note_id):
     note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
     data = request.get_json()
@@ -125,6 +128,7 @@ def save_note(note_id):
 
 
 @app.route('/notes/<note_id>', methods=['DELETE'])
+@login_required
 def delete_note(note_id):
     note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
     db.session.delete(note)

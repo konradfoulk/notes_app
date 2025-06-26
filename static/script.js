@@ -14,16 +14,16 @@ function getTitle(content) {
     let title = ''
     for (let node of contentContainer.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
-            const t = node.textContent;
-            if (t) {
-                title = t;
+            const text = node.textContent;
+            if (text) {
+                title = text;
                 break;
             };
         }
         if (node.nodeType === Node.ELEMENT_NODE) {
-            const t = node.innerText;
-            if (t) {
-                title = t;
+            const text = node.innerText;
+            if (text) {
+                title = text;
                 break;
             }
         }
@@ -101,13 +101,14 @@ async function saveNote() {
     notes.splice(notes.findIndex(note => note.id == currentNoteId), 1);
     notes.unshift(data);
 
+    btn = document.querySelector(`#note-${currentNoteId}`)
     if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
-        document.querySelector(`#note-${currentNoteId}`).remove();
-        btn = createBtn(currentNoteId);
-        btn.classList.add('active');
-        fileList.insertBefore(btn, fileList.firstChild);
+        btn.remove();
+        newBtn = createBtn(currentNoteId);
+        newBtn.classList.add('active');
+        fileList.insertBefore(newBtn, fileList.firstChild);
     } else {
-        document.querySelector(`#note-${currentNoteId}`).textContent = getTitle(data.content);
+        btn.textContent = getTitle(data.content);
     };
 };
 
@@ -128,7 +129,17 @@ async function deleteNote() {
 };
 
 document.querySelector('#new-file-btn').addEventListener('click', createNote);
-document.querySelector('#delete-btn').addEventListener('click', deleteNote)
+document.querySelector('#delete-btn').addEventListener('click', deleteNote);
+document.querySelectorAll('.rich-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        document.execCommand(btn.id, false, null);
+    });
+});
+document.querySelectorAll('.adv-rich-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        document.execCommand(btn.classList.item(1), false, btn.id);
+    });
+});
 editor.addEventListener('input', saveNote);
 
 loadNotes();

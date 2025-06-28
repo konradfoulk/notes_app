@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: arial;
+    color: hsl(0, 0%, 90%);
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(0, 0%, 15%);
+}
+
+#container {
+    background-color: hsl(0, 0%, 10%);
+    width: fit-content;
+    border: 1px solid hsl(0, 0%, 20%);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    padding: 3px 0px 3px 0px;
+}
+
+input {
+    display: block;
+    width: 500px;
+    height: 40px;
+    outline: none;
+    border: 1px solid hsl(0, 0%, 20%);
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+input:not(input[name="submit"]) {
+    background: transparent;
+    padding: 21px;
+    margin-bottom: 21px;
+}
+
+input[name="submit"] {
+    background-color: hsl(0, 0%, 20%);
+    cursor: pointer;
+    font-weight: bold;
+    margin: 21px 0;
+}
+
+input[name="submit"]:hover {
+    background-color: hsl(0, 0%, 15%);
+    border-color: hsl(0, 0%, 15%);
+}
+
+#alt-link {
+    justify-self: center;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}

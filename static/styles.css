@@ -21,10 +21,6 @@ input {
     font-size: 1em;
 }
 
-/* input {
-    font-weight: bold;
-} */
-
 button:hover {
     background-color: hsl(0, 0%, 20%);
 }
@@ -115,9 +111,12 @@ main {
 
 #file-list button {
     text-align: left;
+    overflow: hidden;
+    text-wrap: nowrap;
     font-size: 1.2em;
     margin-left: 7px;
     margin-right: 7px;
+    padding: 10px 30px;
 }
 
 #new-file-btn {

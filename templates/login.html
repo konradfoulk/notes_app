@@ -5,20 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='authstyles.css') }}">
 </head>
 
 <body>
-    <h1>Log In</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.submit }}
-    </form>
-    {% for message in get_flashed_messages() %}
-    <span style="color: red; display: block;">{{message}}</span>
-    {% endfor %}
-    <span>Don't have an account? <a href="{{url_for('signup')}}">Sign Up</a></span>
+    <div id="container">
+        <h1>Log In</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="username">Username</label>
+            {{ form.username }}
+            <label for="password">Password</label>
+            {{ form.password }}
+            {% for message in get_flashed_messages() %}
+            <div>{{message}}</div>
+            {% endfor %}
+            {{ form.submit }}
+        </form>
+        <div id="alt-link">Don't have an account? <a href="{{url_for('signup')}}">Sign Up</a></div>
+    </div>
 </body>
 
 </html>

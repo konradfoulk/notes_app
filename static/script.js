@@ -45,7 +45,6 @@ function createBtn(noteId) {
 
     btn.textContent = getTitle(notes.find(note => note.id == noteId).content);
     btn.id = 'note-' + noteId;
-    btn.classList.add('note-btn');
 
     btn.addEventListener('click', e => {
         editor.innerHTML = notes.find(note => note.id == noteId).content;
@@ -86,7 +85,9 @@ async function loadNotes() {
 
     if (fileList.firstChild) {
         fileList.firstChild.click()
-    }
+    } else {
+        createNote()
+    };
 };
 
 async function saveNote() {

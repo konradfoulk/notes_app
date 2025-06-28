@@ -6,34 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 
 <body>
     <main>
         <div id="nav-container">
-            <span>{{ username }}</span>
-            <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
-                {{ form.hidden_tag() }}
-                {{ form.submit }}
-            </form>
+            <h3>Notes</h3>
+            <div>
+                <strong>{{ username }}</strong>
+                <form action="{{ url_for('logout') }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit }}
+                </form>
+            </div>
         </div>
         <div id="content-container">
             <div id="file-nav-container">
                 <div id="file-list"></div>
-                <button id="new-file-btn">New File</button>
+                <button id="new-file-btn" class="colored">New File</button>
             </div>
             <div id="editor-container">
                 <div id="toolbar">
-                    <button id="h1" class="adv-rich-btn formatBlock">H</button>
-                    <button id="h2" class="adv-rich-btn formatBlock">S</button>
-                    <button id="bold" class="rich-btn">B</button>
-                    <button id="italic" class="rich-btn">I</button>
-                    <button id="underline" class="rich-btn">U</button>
-                    <button id="strikethrough" class="rich-btn">-S-</button>
-                    <button id="insertUnorderedList" class="rich-btn">- </button>
-                    <button id="insertOrderedList" class="rich-btn">1.</button>
-                    <button id="delete-btn">Delete</button>
+                    <button id="spacer"><i class="fa-regular fa-trash-can fa-fw colored"></i></button>
+                    <button id="h1" class="adv-rich-btn formatBlock"><i
+                            class="fa-solid fa-heading fa-fw colored"></i></button>
+                    <button id="h2" class="adv-rich-btn formatBlock"><i
+                            class="fa-solid fa-s fa-fw colored"></i></button>
+                    <button id="p" class="adv-rich-btn formatBlock"><i
+                            class="fa-solid fa-paragraph fa-fw colored"></i></button>
+                    <button id="bold" class="rich-btn"><i class="fa-solid fa-bold fa-fw colored"></i></button>
+                    <button id="italic" class="rich-btn"><i class="fa-solid fa-italic fa-fw colored"></i></button>
+                    <button id="underline" class="rich-btn"><i class="fa-solid fa-underline fa-fw colored"></i></button>
+                    <button id="strikethrough" class="rich-btn"><i
+                            class="fa-solid fa-strikethrough fa-fw colored"></i></button>
+                    <button id="insertUnorderedList" class="rich-btn"><i
+                            class="fa-solid fa-list-ul fa-fw colored"></i></button>
+                    <button id="insertOrderedList" class="rich-btn"><i
+                            class="fa-solid fa-list-ol fa-fw colored"></i></button>
+                    <button id="delete-btn"><i class="fa-regular fa-trash-can fa-fw colored"></i></button>
                 </div>
                 <div id="note-editor" contenteditable="true" style="visibility: hidden;"></div>
             </div>

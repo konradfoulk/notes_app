@@ -46,7 +46,7 @@ function createBtn(noteId) {
     btn.textContent = getTitle(notes.find(note => note.id == noteId).content);
     btn.id = 'note-' + noteId;
 
-    btn.addEventListener('click', e => {
+    btn.addEventListener('click', event => {
         editor.innerHTML = notes.find(note => note.id == noteId).content;
         if (editor.style.visibility == 'hidden') {
             editor.style.visibility = 'visible';
@@ -55,7 +55,7 @@ function createBtn(noteId) {
         if (document.querySelector('.active')) {
             document.querySelector('.active').classList.remove('active');
         };
-        e.target.classList.add('active');
+        event.target.classList.add('active');
 
         currentNoteId = noteId;
     });
@@ -156,6 +156,12 @@ document.querySelectorAll('.adv-rich-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
         document.execCommand(btn.classList.item(1), false, btn.id);
     });
+});
+editor.addEventListener('keydown', event => {
+    if (event.key == 'Tab') {
+        event.preventDefault();
+        document.execCommand('indent', false, null)
+    };
 });
 editor.addEventListener('input', saveNote);
 

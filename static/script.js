@@ -73,6 +73,7 @@ function createBtn(noteId) {
         event.target.classList.add('active');
 
         currentNoteId = noteId;
+        quill.focus()
     });
     return (btn);
 };

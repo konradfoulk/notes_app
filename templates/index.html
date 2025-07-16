@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.core.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js" defer></script>
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 
@@ -32,24 +34,18 @@
             <div id="editor-container">
                 <div id="toolbar">
                     <button id="spacer"><i class="fa-regular fa-trash-can fa-fw colored"></i></button>
-                    <button id="h1" class="adv-rich-btn formatBlock"><i
-                            class="fa-solid fa-heading fa-fw colored"></i></button>
-                    <button id="h2" class="adv-rich-btn formatBlock"><i
-                            class="fa-solid fa-s fa-fw colored"></i></button>
-                    <button id="p" class="adv-rich-btn formatBlock"><i
-                            class="fa-solid fa-paragraph fa-fw colored"></i></button>
-                    <button id="bold" class="rich-btn"><i class="fa-solid fa-bold fa-fw colored"></i></button>
-                    <button id="italic" class="rich-btn"><i class="fa-solid fa-italic fa-fw colored"></i></button>
-                    <button id="underline" class="rich-btn"><i class="fa-solid fa-underline fa-fw colored"></i></button>
-                    <button id="strikethrough" class="rich-btn"><i
-                            class="fa-solid fa-strikethrough fa-fw colored"></i></button>
-                    <button id="insertUnorderedList" class="rich-btn"><i
+                    <button class="ql-header" value="1"><i class="fa-solid fa-heading fa-fw colored"></i></button>
+                    <button class="ql-header right-end" value="2"><i class="fa-solid fa-s fa-fw colored"></i></button>
+                    <button class="ql-bold left-end"><i class="fa-solid fa-bold fa-fw colored"></i></button>
+                    <button class="ql-italic"><i class="fa-solid fa-italic fa-fw colored"></i></button>
+                    <button class="ql-underline"><i class="fa-solid fa-underline fa-fw colored"></i></button>
+                    <button class="ql-strike right-end"><i class="fa-solid fa-strikethrough fa-fw colored"></i></button>
+                    <button class="ql-list left-end" value="bullet"><i
                             class="fa-solid fa-list-ul fa-fw colored"></i></button>
-                    <button id="insertOrderedList" class="rich-btn"><i
-                            class="fa-solid fa-list-ol fa-fw colored"></i></button>
+                    <button class="ql-list" value="ordered"><i class="fa-solid fa-list-ol fa-fw colored"></i></button>
                     <button id="delete-btn"><i class="fa-regular fa-trash-can fa-fw colored"></i></button>
                 </div>
-                <div id="note-editor" contenteditable="true" style="visibility: hidden;"></div>
+                <div id="note-editor"></div>
             </div>
         </div>
     </main>

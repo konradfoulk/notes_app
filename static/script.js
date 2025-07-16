@@ -2,6 +2,17 @@ let notes = [];
 let currentNoteId;
 let fileList = document.querySelector('#file-list');
 let editor = document.querySelector('#note-editor');
+let toolBtns = document.querySelectorAll('#toolbar button')
+
+const quill = new Quill('#note-editor', {
+    modules: {
+        toolbar: '#toolbar'
+    }
+});
+editor.style.visibility = 'hidden'
+toolBtns.forEach(btn => {
+    btn.disabled = true;
+});
 
 function getTitle(content) {
     if (!content) {
@@ -15,14 +26,14 @@ function getTitle(content) {
     for (let node of contentContainer.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent;
-            if (text) {
+            if (text && !(/^\s*$/.test(text))) {
                 title = text;
                 break;
             };
         };
         if (node.nodeType === Node.ELEMENT_NODE) {
             const text = node.innerText;
-            if (text) {
+            if (text && !(/^\s*$/.test(text))) {
                 title = text;
                 break;
             };
@@ -47,9 +58,12 @@ function createBtn(noteId) {
     btn.id = 'note-' + noteId;
 
     btn.addEventListener('click', event => {
-        editor.innerHTML = notes.find(note => note.id == noteId).content;
+        quill.root.innerHTML = notes.find(note => note.id == noteId).content;
         if (editor.style.visibility == 'hidden') {
             editor.style.visibility = 'visible';
+            toolBtns.forEach(btn => {
+                btn.disabled = false;
+            });
         };
 
         if (document.querySelector('.active')) {
@@ -100,7 +114,7 @@ async function loadNotes() {
 
 async function saveNote() {
     try {
-        const content = editor.innerHTML;
+        const content = quill.root.innerHTML;
         const response = await fetch(`/notes/${currentNoteId}`, {
             method: 'PUT',
             body: JSON.stringify({ content: content }),
@@ -138,6 +152,10 @@ async function deleteNote() {
                 fileList.firstChild.click();
             } else {
                 editor.style.visibility = 'hidden';
+                toolBtns.forEach(btn => {
+                    btn.disabled = true;
+                    btn.ariaPressed = false;
+                });
             };
         };
     } catch (error) {
@@ -147,22 +165,15 @@ async function deleteNote() {
 
 document.querySelector('#new-file-btn').addEventListener('click', createNote);
 document.querySelector('#delete-btn').addEventListener('click', deleteNote);
-document.querySelectorAll('.rich-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-        document.execCommand(btn.id, false, null);
-    });
-});
-document.querySelectorAll('.adv-rich-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-        document.execCommand(btn.classList.item(1), false, btn.id);
-    });
-});
-editor.addEventListener('keydown', event => {
-    if (event.key == 'Tab') {
-        event.preventDefault();
-        document.execCommand('indent', false, null)
+document.querySelector('#editor-container').addEventListener('click', () => {
+    if (editor.style.visibility == 'hidden') {
+        createNote();
     };
 });
-editor.addEventListener('input', saveNote);
+quill.on('text-change', () => {
+    if (quill.root.innerHTML != notes.find(note => note.id == currentNoteId).content) {
+        saveNote()
+    };
+});
 
 loadNotes();

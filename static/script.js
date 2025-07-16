@@ -23,23 +23,23 @@ function getTitle(content) {
     contentContainer.innerHTML = content;
 
     let title = '';
-    let whitespace = /^\s*$/
     for (let node of contentContainer.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent;
-            if (text && !(whitespace.test(text))) {
-                title = text.trim();
+            if (text) {
+                title = text;
                 break;
             };
         };
         if (node.nodeType === Node.ELEMENT_NODE) {
             const text = node.innerText;
-            if (text && !(whitespace.test(text))) {
-                title = text.trim();
+            if (text) {
+                title = text;
                 break;
             };
         };
     };
+    title = title.trim()
 
     if (!title) {
         return 'New Note';

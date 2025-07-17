@@ -1,14 +1,17 @@
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash, jsonify, request
+import os
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Note
 from forms import LoginForm, SignupForm, LogoutForm
 
+load_dotenv()
 
 # initialize Flask app, database, and flask_login
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '4'
+app.config['SECRET_KEY'] = f'{os.environ['Flask_SECRET_KEY']}'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 db.init_app(app)

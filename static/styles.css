@@ -124,6 +124,10 @@ main {
     font-weight: bold;
 }
 
+#new-file-btn:hover {
+    color: goldenrod;
+}
+
 #editor-container {
     flex: 1;
     overflow: auto;
@@ -136,12 +140,12 @@ main {
     padding: 10px 30px
 }
 
-#toolbar button:not([disabled]):hover {
-    background-color: hsl(0, 0%, 15%);
+#toolbar button:not([disabled]):hover i {
+    color: goldenrod;
 }
 
-#toolbar button[aria-pressed="true"] {
-    background-color: hsl(0, 0%, 15%);
+#toolbar button[aria-pressed="true"] i {
+    color: goldenrod;
 }
 
 .right-end {

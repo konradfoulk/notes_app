@@ -11,7 +11,7 @@ load_dotenv()
 # initialize Flask app, database, and flask_login
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = f'{os.environ['Flask_SECRET_KEY']}'
+app.config['SECRET_KEY'] = os.environ['Flask_SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 db.init_app(app)
@@ -23,7 +23,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 # define routes and functions for webpage

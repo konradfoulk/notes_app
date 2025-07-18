@@ -47,7 +47,7 @@ input:hover {
 }
 
 .colored {
-    color: goldenrod;
+    color: hsl(0, 0%, 33%);
 }
 
 .active {

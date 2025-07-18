@@ -1,8 +1,8 @@
 let notes = [];
 let currentNoteId;
-let fileList = document.querySelector('#file-list');
-let editor = document.querySelector('#note-editor');
-let toolBtns = document.querySelectorAll('#toolbar button')
+const fileList = document.querySelector('#file-list');
+const editor = document.querySelector('#note-editor');
+const toolBtns = document.querySelectorAll('#toolbar button')
 
 const quill = new Quill('#note-editor', {
     modules: {
@@ -23,7 +23,7 @@ function getTitle(content) {
     contentContainer.innerHTML = content;
 
     let title = '';
-    for (let node of contentContainer.childNodes) {
+    for (const node of contentContainer.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent;
             if (text) {
@@ -53,7 +53,7 @@ function getTitle(content) {
 };
 
 function createBtn(noteId) {
-    let btn = document.createElement('button');
+    const btn = document.createElement('button');
 
     btn.textContent = getTitle(notes.find(note => note.id == noteId).content);
     btn.id = 'note-' + noteId;
@@ -84,7 +84,7 @@ async function createNote() {
         const data = await response.json();
 
         notes.unshift(data);
-        btn = createBtn(data.id);
+        const btn = createBtn(data.id);
         fileList.insertBefore(btn, fileList.firstChild);
 
         btn.click();
@@ -99,8 +99,8 @@ async function loadNotes() {
         const data = await response.json();
         notes = data;
 
-        for (let note of notes) {
-            btn = createBtn(note.id);
+        for (const note of notes) {
+            const btn = createBtn(note.id);
             fileList.insertBefore(btn, fileList.firstChild);
         };
 
@@ -127,10 +127,10 @@ async function saveNote() {
         notes.splice(notes.findIndex(note => note.id == currentNoteId), 1);
         notes.unshift(data);
 
-        btn = document.querySelector(`#note-${currentNoteId}`);
+        const btn = document.querySelector(`#note-${currentNoteId}`);
         if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
             btn.remove();
-            newBtn = createBtn(currentNoteId);
+            const newBtn = createBtn(currentNoteId);
             newBtn.classList.add('active');
             fileList.insertBefore(newBtn, fileList.firstChild);
         } else {

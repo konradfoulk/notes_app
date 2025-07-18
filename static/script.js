@@ -172,10 +172,14 @@ document.querySelector('#editor-container').addEventListener('click', () => {
         createNote();
     };
 });
+let timeout
 quill.on('text-change', () => {
-    if (quill.root.innerHTML != notes.find(note => note.id == currentNoteId).content) {
-        saveNote()
-    };
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        if (quill.root.innerHTML != notes.find(note => note.id == currentNoteId).content) {
+            saveNote()
+        };
+    }, 360)
 });
 
 loadNotes();

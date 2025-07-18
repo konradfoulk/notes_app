@@ -52,14 +52,18 @@ function getTitle(content) {
     return title;
 };
 
+function findNote(noteId) {
+    return notes.find(note => note.id == noteId)
+}
+
 function createBtn(noteId) {
     const btn = document.createElement('button');
 
-    btn.textContent = getTitle(notes.find(note => note.id == noteId).content);
+    btn.textContent = getTitle(findNote(noteId).content);
     btn.id = 'note-' + noteId;
 
     btn.addEventListener('click', event => {
-        quill.root.innerHTML = notes.find(note => note.id == noteId).content;
+        quill.root.innerHTML = findNote(noteId).content;
         if (editor.style.visibility == 'hidden') {
             editor.style.visibility = 'visible';
             toolBtns.forEach(btn => {
@@ -114,6 +118,10 @@ async function loadNotes() {
     };
 };
 
+function findNoteIndex(noteId) {
+    return notes.findIndex(note => note.id == noteId)
+}
+
 async function saveNote() {
     try {
         const content = quill.root.innerHTML;
@@ -124,7 +132,7 @@ async function saveNote() {
         });
         const data = await response.json();
 
-        notes.splice(notes.findIndex(note => note.id == currentNoteId), 1);
+        notes.splice(findNoteIndex(currentNoteId), 1);
         notes.unshift(data);
 
         const btn = document.querySelector(`#note-${currentNoteId}`);
@@ -143,11 +151,11 @@ async function saveNote() {
 
 async function deleteNote() {
     try {
-        if (notes.find(note => note.id == currentNoteId)) {
+        if (findNote(currentNoteId)) {
             const response = await fetch(`/notes/${currentNoteId}`, { method: 'DELETE' });
             const data = await response.json();
 
-            notes.splice(notes.findIndex(note => note.id == data.id), 1);
+            notes.splice(findNoteIndex(data.id), 1);
             document.querySelector(`#note-${data.id}`).remove();
 
             if (fileList.firstChild) {
@@ -176,7 +184,7 @@ let timeout
 quill.on('text-change', () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-        if (quill.root.innerHTML != notes.find(note => note.id == currentNoteId).content) {
+        if (quill.root.innerHTML != findNote(currentNoteId).content) {
             saveNote()
         };
     }, 360)

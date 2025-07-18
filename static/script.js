@@ -24,14 +24,15 @@ function getTitle(content) {
 
     let title = '';
     for (const node of contentContainer.childNodes) {
-        if (node.nodeType === Node.TEXT_NODE) {
+        type = node.nodeType
+        if (type === Node.TEXT_NODE) {
             const text = node.textContent;
             if (text) {
                 title = text;
                 break;
             };
         };
-        if (node.nodeType === Node.ELEMENT_NODE) {
+        if (type === Node.ELEMENT_NODE) {
             const text = node.innerText;
             if (text) {
                 title = text;
@@ -60,7 +61,7 @@ function createBtn(noteId) {
     const btn = document.createElement('button');
 
     btn.textContent = getTitle(findNote(noteId).content);
-    btn.id = 'note-' + noteId;
+    btn.id = `note-${noteId}`;
 
     btn.addEventListener('click', event => {
         quill.root.innerHTML = findNote(noteId).content;
@@ -71,8 +72,9 @@ function createBtn(noteId) {
             });
         };
 
-        if (document.querySelector('.active')) {
-            document.querySelector('.active').classList.remove('active');
+        const oldActive = document.querySelector('.active')
+        if (oldActive) {
+            oldActive.classList.remove('active');
         };
         event.target.classList.add('active');
 
@@ -136,7 +138,7 @@ async function saveNote() {
         notes.unshift(data);
 
         const btn = document.querySelector(`#note-${currentNoteId}`);
-        if (document.querySelector('#file-list').firstChild.id != 'note-' + currentNoteId) {
+        if (document.querySelector('#file-list').firstChild.id != `note-${currentNoteId}`) {
             btn.remove();
             const newBtn = createBtn(currentNoteId);
             newBtn.classList.add('active');

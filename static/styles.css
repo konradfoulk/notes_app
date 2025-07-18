@@ -110,6 +110,7 @@ main {
 }
 
 #file-list button {
+    flex-shrink: 0;
     text-align: left;
     overflow: hidden;
     text-wrap: nowrap;

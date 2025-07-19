@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(150), nullable=False)
 
-    notes = db.relationship('Note')
+    notes = db.relationship('Note', back_populates='user')
 
 
 class Note(db.Model):
@@ -20,4 +20,4 @@ class Note(db.Model):
     content = db.Column(db.Text, default='')
     last_save = db.Column(db.DateTime, default=db.func.now())
 
-    user = db.relationship('User')
+    user = db.relationship('User', back_populates='notes')

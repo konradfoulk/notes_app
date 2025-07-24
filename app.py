@@ -89,7 +89,7 @@ def logout():
 @app.route('/notes', methods=['GET'])
 @login_required
 def get_notes():
-    # query database for notes
+    # query database for notes and sort them by last save (edit)
     notes = Note.query.filter_by(user_id=current_user.id).order_by(
         Note.last_save).all()
     # format notes to send JSON response

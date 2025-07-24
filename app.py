@@ -47,11 +47,8 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
-            # remember=True?
-            # current_user.is_authenticated = True?
             return redirect(url_for('index'))
         else:
-            # handle failed login
             flash('Username or password was incorrect.', 'error')
     return render_template('login.html', form=form)
 
@@ -83,6 +80,7 @@ def signup():
 @app.route('/logout', methods=['POST'])
 @login_required
 def logout():
+    # logout user and redirect to login page
     logout_user()
     return redirect(url_for('login'))
 
@@ -91,8 +89,10 @@ def logout():
 @app.route('/notes', methods=['GET'])
 @login_required
 def get_notes():
+    # query database for notes
     notes = Note.query.filter_by(user_id=current_user.id).order_by(
         Note.last_save).all()
+    # format notes to send JSON response
     notes_list = [
         {
             'id': note.id,
@@ -105,9 +105,11 @@ def get_notes():
 @app.route('/notes', methods=['POST'])
 @login_required
 def create_note():
+    # create note in database
     note = Note(user_id=current_user.id)
     db.session.add(note)
     db.session.commit()
+    # return JSON response for note for redundancy
     return jsonify(
         {
             'id': note.id,
@@ -119,11 +121,14 @@ def create_note():
 @app.route('/notes/<note_id>', methods=['PUT'])
 @login_required
 def save_note(note_id):
+    # query database for note
     note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
     data = request.get_json()
+    # update note
     note.content = data.get('content', note.content)
     note.last_save = db.func.now()
     db.session.commit()
+    # return JSON  response for note for redundancy
     return jsonify({
         'id': note.id,
         'content': note.content
@@ -133,9 +138,12 @@ def save_note(note_id):
 @app.route('/notes/<note_id>', methods=['DELETE'])
 @login_required
 def delete_note(note_id):
+    # query database for note
     note = Note.query.filter_by(id=note_id, user_id=current_user.id).first()
+    # delete note
     db.session.delete(note)
     db.session.commit()
+    # redundant JSON response
     return jsonify({
         'status': 'success',
         'id': note_id

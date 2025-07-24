@@ -5,7 +5,7 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 
 
-# create database table for users
+# create database table for users and notes
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
